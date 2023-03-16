@@ -12,15 +12,7 @@ const refs = {
   timerFields: document.querySelectorAll('.field'),
 };
 
-const options = {
-  enableTime: true,
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
-  onClose(selectedDates) {
-    console.log(selectedDates[0]);
-  },
-};
+// INLINE STYLES
 
 // Inline styles for date picker
 
@@ -36,13 +28,8 @@ refs.startBtn.style.border = 'none';
 refs.startBtn.style.borderRadius = '10px';
 refs.startBtn.style.width = '100px';
 refs.startBtn.style.height = '40px';
-refs.startBtn.style.backgroundColor = 'crimson';
-
+refs.startBtn.style.backgroundColor = 'gray';
 refs.startBtn.style.color = 'white';
-
-const handleStartBtnClick = event => {
-  refs.startBtn.style.backgroundColor = 'darkRed';
-};
 
 // Inline styles for timer box
 
@@ -67,18 +54,62 @@ refs.timerFields.forEach(timerField => {
   fieldNumber += 1;
 });
 
-// flatpickr
+// flatpickr options
 
-const inputDate = flatpickr(refs.datePicker, options);
-const selectedDate = inputDate.selectedDates[0];
-const currentDate = new Date();
+const options = {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose(selectedDates) {
+    console.log(selectedDates[0]);
+    if (selectedDates[0] < currentDate) {
+      window.alert('Please choose a date in the future');
+    } else {
+      refs.startBtn.style.backgroundColor = 'crimson';
+      refs.startBtn.addEventListener('click', handleStartBtnClick);
+    }
+  },
+};
 
-if (selectedDate < currentDate) {
-  window.alert('Please choose a date in the future');
-} else {
-  refs.startBtn.addEventListener('click', handleStartBtnClick);
+// function to convert milliseconds to days, hours, minutes and seconds
+
+function convertMs(ms) {
+  // Number of milliseconds per unit of time
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+
+  // Remaining days
+  const days = Math.floor(ms / day);
+  // Remaining hours
+  const hours = Math.floor((ms % day) / hour);
+  // Remaining minutes
+  const minutes = Math.floor(((ms % day) % hour) / minute);
+  // Remaining seconds
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+  return { days, hours, minutes, seconds };
 }
 
-console.log(selectedDate);
-console.log(currentDate);
-console.log(selectedDate < currentDate);
+// Function to handle start click
+
+const handleStartBtnClick = event => {
+  // console.log('hello');
+  const selectedDate = inputDate.selectedDates[0];
+  // console.log(selectedDate);
+  const currentTime = Date.now();
+  const deltaCountdown = convertMs(selectedDate - currentTime);
+  // console.log(startCountdown);
+  const timerId = setInterval(
+    (countdown = timePeriod => {}),
+    1000,
+    deltaCountdown
+  );
+};
+
+// flatpickr
+
+const currentDate = new Date();
+const inputDate = flatpickr(refs.datePicker, options);
