@@ -62,8 +62,8 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
-    if (selectedDates[0] < currentDate) {
+    // console.log(selectedDates[0]);
+    if (selectedDates[0] < currentTime) {
       window.alert('Please choose a date in the future');
     } else {
       refs.startBtn.style.backgroundColor = 'crimson';
@@ -93,23 +93,53 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
+// Function to add zero before one-digit number
+
+const addLeadingZero = value => {
+  return String(value).padStart(2, '0');
+};
+
+// Function to countdown
+
+const countdown = selectedTime => {
+  const currentTime = Date.now();
+  console.log(currentTime);
+  console.log(selectedTime);
+  const deltaTime = selectedTime - currentTime;
+  console.log(deltaTime);
+  const deltaTimeConverted = convertMs(deltaTime);
+  console.log(deltaTimeConverted);
+
+  console.log(refs.daysLeft.value);
+
+  refs.daysLeft.textContent = addLeadingZero(deltaTimeConverted.days);
+  refs.hoursLeft.textContent = addLeadingZero(deltaTimeConverted.hours);
+  refs.minutesLeft.textContent = addLeadingZero(deltaTimeConverted.minutes);
+  refs.secondsLeft.textContent = addLeadingZero(deltaTimeConverted.seconds);
+
+  if (
+    deltaTimeConverted.days === 0 &&
+    deltaTimeConverted.hours === 0 &&
+    deltaTimeConverted.minutes === 0 &&
+    deltaTimeConverted.seconds === 0
+  ) {
+    isActive = false;
+    console.log(isActive);
+    return;
+    // return (isActive = false);
+  }
+};
+
 // Function to handle start click
 
-const handleStartBtnClick = event => {
-  // console.log('hello');
-  const selectedDate = inputDate.selectedDates[0];
-  // console.log(selectedDate);
-  const currentTime = Date.now();
-  const deltaCountdown = convertMs(selectedDate - currentTime);
-  // console.log(startCountdown);
-  const timerId = setInterval(
-    (countdown = timePeriod => {}),
-    1000,
-    deltaCountdown
-  );
+const handleStartBtnClick = () => {
+  console.log('hello');
+  const selectedTime = inputDate.selectedDates[0];
+  console.log(selectedTime);
+
+  const timerId = setInterval(countdown, 1000, selectedTime);
 };
 
 // flatpickr
-
-const currentDate = new Date();
+const currentTime = new Date();
 const inputDate = flatpickr(refs.datePicker, options);
