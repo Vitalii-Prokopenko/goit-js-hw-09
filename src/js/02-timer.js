@@ -62,7 +62,6 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    // console.log(selectedDates[0]);
     if (selectedDates[0] < currentTime) {
       window.alert('Please choose a date in the future');
     } else {
@@ -101,16 +100,10 @@ const addLeadingZero = value => {
 
 // Function to countdown
 
-const countdown = selectedTime => {
+const timerUpdate = selectedTime => {
   const currentTime = Date.now();
-  console.log(currentTime);
-  console.log(selectedTime);
   const deltaTime = selectedTime - currentTime;
-  console.log(deltaTime);
   const deltaTimeConverted = convertMs(deltaTime);
-  console.log(deltaTimeConverted);
-
-  console.log(refs.daysLeft.value);
 
   refs.daysLeft.textContent = addLeadingZero(deltaTimeConverted.days);
   refs.hoursLeft.textContent = addLeadingZero(deltaTimeConverted.hours);
@@ -123,21 +116,15 @@ const countdown = selectedTime => {
     deltaTimeConverted.minutes === 0 &&
     deltaTimeConverted.seconds === 0
   ) {
-    isActive = false;
-    console.log(isActive);
-    return;
-    // return (isActive = false);
+    clearInterval(timerId);
   }
 };
 
 // Function to handle start click
 
 const handleStartBtnClick = () => {
-  console.log('hello');
   const selectedTime = inputDate.selectedDates[0];
-  console.log(selectedTime);
-
-  const timerId = setInterval(countdown, 1000, selectedTime);
+  timerId = setInterval(timerUpdate, 1000, selectedTime);
 };
 
 // flatpickr
