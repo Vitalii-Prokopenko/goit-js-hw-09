@@ -5,13 +5,29 @@ const refs = {
 
 function createPromise(position, delay) {
   return (newPromise = new Promise((resolve, reject) => {
-    const shouldResolve = Math.random() > 0.3;
-    if (shouldResolve) {
-      resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
-    } else {
-      reject(`❌ Rejected promise ${position} in ${delay}ms`);
-    }
+    setTimeout(() => {
+      const shouldResolve = Math.random() > 0.3;
+      if (shouldResolve) {
+        resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      } else {
+        reject(`❌ Rejected promise ${position} in ${delay}ms`);
+      }
+    }, delay);
   }));
+}
+function markupMessage(number, message, color) {
+  const promiseMessage = document.createElement('div');
+  markupOfPromiseMessage = `<div data-position="${number}">${message}</div>`;
+  refs.form.insertAdjacentHTML('beforeend', markupOfPromiseMessage);
+  const messageBox = document.querySelector(`div[data-position="${number}"`);
+
+  messageBox.style.backgroundColor = color;
+  messageBox.style.color = 'white';
+  messageBox.style.width = '270px';
+  messageBox.style.height = '25px';
+  messageBox.style.borderRadius = '5px';
+  messageBox.style.marginTop = '10px';
+  messageBox.style.textAlign = 'center';
 }
 
 // Function to handle submit event
@@ -23,15 +39,12 @@ const handleSubmit = event => {
     elements: { delay, step, amount },
   } = event.currentTarget;
 
-  console.log(delay.value);
-  console.log(step.value);
-  console.log(amount.value);
-
   const numberOfPromises = Number(amount.value);
   const firstDelay = Number(delay.value);
   const stepOfNextDelays = Number(step.value);
 
-  let delayOfPromise;
+  let delayOfPromise = 0;
+  let markupOfPromiseMessage = '';
 
   for (let i = 1; i <= numberOfPromises; i += 1) {
     if (i === 1) {
@@ -39,14 +52,13 @@ const handleSubmit = event => {
     } else {
       delayOfPromise = firstDelay + (i - 1) * stepOfNextDelays;
     }
-    console.log(`${i} and ${delayOfPromise}`);
 
     createPromise(i, delayOfPromise)
       .then(value => {
-        console.log(value);
+        markupMessage(i, value, 'green');
       })
       .catch(error => {
-        console.log(error);
+        markupMessage(i, error, 'red');
       });
   }
 };
