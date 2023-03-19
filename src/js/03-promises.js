@@ -21,20 +21,20 @@ function createPromise(position, delay) {
 
 // Function to markup messages html
 
-function markupMessage(number, message, color) {
-  const promiseMessage = document.createElement('div');
-  markupOfPromiseMessage = `<div data-position="${number}">${message}</div>`;
-  refs.form.insertAdjacentHTML('beforeend', markupOfPromiseMessage);
-  const messageBox = document.querySelector(`div[data-position="${number}"`);
+// function markupMessage(number, message, color) {
+//   const promiseMessage = document.createElement('div');
+//   markupOfPromiseMessage = `<div data-position="${number}">${message}</div>`;
+//   refs.form.insertAdjacentHTML('beforeend', markupOfPromiseMessage);
+//   const messageBox = document.querySelector(`div[data-position="${number}"`);
 
-  messageBox.style.backgroundColor = color;
-  messageBox.style.color = 'white';
-  messageBox.style.width = '270px';
-  messageBox.style.height = '25px';
-  messageBox.style.borderRadius = '5px';
-  messageBox.style.marginTop = '10px';
-  messageBox.style.textAlign = 'center';
-}
+//   messageBox.style.backgroundColor = color;
+//   messageBox.style.color = 'white';
+//   messageBox.style.width = '270px';
+//   messageBox.style.height = '25px';
+//   messageBox.style.borderRadius = '5px';
+//   messageBox.style.marginTop = '10px';
+//   messageBox.style.textAlign = 'center';
+// }
 
 // Function to make messages with Notiflix
 
@@ -71,11 +71,11 @@ const handleSubmit = event => {
 
     createPromise(i, delayOfPromise)
       .then(value => {
-        markupMessage(i, value, 'green');
+        // markupMessage(i, value, 'green');
         makeNotification(true, value);
       })
       .catch(error => {
-        markupMessage(i, error, 'red');
+        // markupMessage(i, error, 'red');
         makeNotification(false, error);
       });
   }
