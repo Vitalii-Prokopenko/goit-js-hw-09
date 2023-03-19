@@ -1,3 +1,5 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 const refs = {
   form: document.querySelector('.form'),
   submitBtn: document.querySelector('button'),
@@ -15,6 +17,9 @@ function createPromise(position, delay) {
     }, delay);
   }));
 }
+
+// Function to markup messages
+
 function markupMessage(number, message, color) {
   const promiseMessage = document.createElement('div');
   markupOfPromiseMessage = `<div data-position="${number}">${message}</div>`;
@@ -28,6 +33,16 @@ function markupMessage(number, message, color) {
   messageBox.style.borderRadius = '5px';
   messageBox.style.marginTop = '10px';
   messageBox.style.textAlign = 'center';
+}
+
+// Function to make messages with Notiflix
+
+function makeNotification(isSuccess, message) {
+  if (isSuccess) {
+    Notify.success(message);
+  } else {
+    Notify.failure(message);
+  }
 }
 
 // Function to handle submit event
@@ -56,9 +71,11 @@ const handleSubmit = event => {
     createPromise(i, delayOfPromise)
       .then(value => {
         markupMessage(i, value, 'green');
+        makeNotification(true, value);
       })
       .catch(error => {
         markupMessage(i, error, 'red');
+        makeNotification(false, error);
       });
   }
 };
