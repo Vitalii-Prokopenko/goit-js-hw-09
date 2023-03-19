@@ -5,27 +5,25 @@ const refs = {
 };
 
 let intervalChangeColor = null;
-let isColorSwitcherActive = false;
+refs.stopBtn.setAttribute('disabled', '');
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
 const handleStartClick = () => {
-  if (isColorSwitcherActive) {
-    return;
-  }
-
   intervalChangeColor = setInterval(() => {
     refs.body.style.backgroundColor = getRandomHexColor();
+    refs.startBtn.setAttribute('disabled', '');
+    refs.stopBtn.removeAttribute('disabled');
   }, 1000);
-  isColorSwitcherActive = true;
 };
 
 const handleStopClick = () => {
   clearInterval(intervalChangeColor);
+  refs.startBtn.removeAttribute('disabled');
+  refs.stopBtn.setAttribute('disabled', '');
 };
 
 refs.startBtn.addEventListener('click', handleStartClick);
 refs.stopBtn.addEventListener('click', handleStopClick);
-// to fix
