@@ -13,6 +13,8 @@ const refs = {
   timerFields: document.querySelectorAll('.field'),
 };
 
+let timerId = null;
+
 // INLINE STYLES
 
 // Inline styles for date picker
@@ -130,6 +132,7 @@ const timerUpdate = selectedTime => {
     deltaTimeConverted.minutes === 0 &&
     deltaTimeConverted.seconds === 0
   ) {
+    // return (isActive = false);
     clearInterval(timerId);
   }
 };
@@ -138,7 +141,12 @@ const timerUpdate = selectedTime => {
 
 const handleStartBtnClick = () => {
   const selectedTime = inputDate.selectedDates[0];
+  // let isActive = true;
   timerId = setInterval(timerUpdate, 1000, selectedTime);
+  // if (!isActive) {
+  //   clearInterval(timerId);
+  // }
+  // clearInterval(timerId);
 };
 
 // flatpickr
