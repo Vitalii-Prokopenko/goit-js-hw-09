@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const refs = {
   datePicker: document.querySelector('#datetime-picker'),
@@ -54,6 +55,19 @@ refs.timerFields.forEach(timerField => {
   fieldNumber += 1;
 });
 
+// Styles for notiflix warning
+
+Notify.init({
+  position: 'center-center',
+  opacity: 0.8,
+  closeButton: true,
+  warning: {
+    background: 'crimson',
+    textColor: 'white',
+    notiflixIconColor: 'white',
+  },
+});
+
 // flatpickr options
 
 const options = {
@@ -63,7 +77,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] < currentTime) {
-      window.alert('Please choose a date in the future');
+      Notify.warning('Please choose a date in the future');
     } else {
       refs.startBtn.style.backgroundColor = 'crimson';
       refs.startBtn.addEventListener('click', handleStartBtnClick);
