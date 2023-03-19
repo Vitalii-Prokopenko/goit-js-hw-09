@@ -18,7 +18,7 @@ function createPromise(position, delay) {
   }));
 }
 
-// Function to markup messages
+// Function to markup messages html
 
 function markupMessage(number, message, color) {
   const promiseMessage = document.createElement('div');
