@@ -6,6 +6,7 @@ const refs = {
 };
 
 function createPromise(position, delay) {
+  let newPromise;
   return (newPromise = new Promise((resolve, reject) => {
     setTimeout(() => {
       const shouldResolve = Math.random() > 0.3;
