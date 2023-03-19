@@ -28,3 +28,4 @@ const handleStopClick = () => {
 
 refs.startBtn.addEventListener('click', handleStartClick);
 refs.stopBtn.addEventListener('click', handleStopClick);
+// to fix
