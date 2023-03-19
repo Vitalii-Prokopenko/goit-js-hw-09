@@ -55,7 +55,7 @@ refs.timerFields.forEach(timerField => {
   fieldNumber += 1;
 });
 
-// Styles for notiflix warning
+// Styles for Notiflix warning
 
 Notify.init({
   position: 'center-center',
