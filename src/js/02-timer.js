@@ -13,7 +13,13 @@ const refs = {
   timerFields: document.querySelectorAll('.field'),
 };
 
+// TimerId is defined globally
+
 let timerId = null;
+
+// Start button is disabled until the date is not picked
+
+refs.startBtn.setAttribute('disabled', '');
 
 // INLINE STYLES
 
@@ -27,12 +33,9 @@ refs.datePicker.style.textAlign = 'center';
 
 // Inline styles for start button
 
-refs.startBtn.style.border = 'none';
 refs.startBtn.style.borderRadius = '10px';
 refs.startBtn.style.width = '100px';
 refs.startBtn.style.height = '40px';
-refs.startBtn.style.backgroundColor = 'gray';
-refs.startBtn.style.color = 'white';
 
 // Inline styles for timer box
 
@@ -81,7 +84,7 @@ const options = {
     if (selectedDates[0] < currentTime) {
       Notify.warning('Please choose a date in the future');
     } else {
-      refs.startBtn.style.backgroundColor = 'crimson';
+      refs.startBtn.removeAttribute('disabled');
       refs.startBtn.addEventListener('click', handleStartBtnClick);
     }
   },
@@ -140,7 +143,7 @@ const timerUpdate = selectedTime => {
 
 const handleStartBtnClick = () => {
   const selectedTime = inputDate.selectedDates[0];
-
+  refs.startBtn.setAttribute('disabled', '');
   timerId = setInterval(timerUpdate, 1000, selectedTime);
 };
 
