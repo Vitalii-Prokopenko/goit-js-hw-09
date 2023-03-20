@@ -12,10 +12,10 @@ function getRandomHexColor() {
 }
 
 const handleStartClick = () => {
+  refs.startBtn.setAttribute('disabled', '');
+  refs.stopBtn.removeAttribute('disabled');
   intervalChangeColor = setInterval(() => {
     refs.body.style.backgroundColor = getRandomHexColor();
-    refs.startBtn.setAttribute('disabled', '');
-    refs.stopBtn.removeAttribute('disabled');
   }, 1000);
 };
 
